@@ -8,7 +8,7 @@ import java.util.List;
 public class Good {
 
     @Id
-    //@Column(name = "id")
+    @Column(name = "id")
     @JoinColumn(name = "id")
     private int id;
     @Column(name = "name")

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <script src="/resources/js/script.js"></script>
+
+</head>
+<body style="margin: 0%;">
+
+    <div id="header">
+        ШАПКА
+        <p sec:authorize="isAuthenticated()" th:text = "${#authentication.name}"></p>
+        <div id = "autorization">
+             <div sec:authorize="isAuthenticated()==false" id="enter" onclick="enter()">
+                Enter
+            </div>
+            <div sec:authorize="isAuthenticated()==false" id="register" onclick="register()">
+                Registration
+            </div>
+            <form sec:authorize="isAuthenticated()" th:action="@{/logOut}" method="post">
+                <input type="submit" value="Sing Out">
+            </form>
+        </div>
+
+        <a style="color: red" href="/users">Show all users</a>
+    </div>
+    <div id="content">
+        <div id="category">
+            category
+        </div>
+        <div id="goods">
+            goods
+            <div id="countGoods">
+                <select id="goodsCount" name="goodsCount" onchange="refreshWithSelect()">
+                    Показать
+                    <option value="five">five</option>
+                    <option value="ten">ten</option>
+                    <option value="twelve">twelve</option>
+                </select>
+            </div>
+            <div id="goods-flex">
+                <div th:each ="good:${allGoods}" class="good">
+                    <p th:text = "${good.name}"></p>
+                    <p>В наличии:</p>
+                    <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook}" method="post" th:object="${good}>
+                        <input type="submit value="Забронировать">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        footer
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <script src="/resources/js/script.js"></script>
+
+</head>
+<body style="margin: 0%;">
+
+<form method="post" action="/login">
+    <div id="enterBar">
+        <p>
+            <input id="login" name="login" placeholder="login">
+        </p>
+        <p th:if="${param.error}">
+            Неверное имя пользователя или пароль
+        </p>
+        <p th:if="${param.logOut}">
+            Вы успешно вышли
+        </p>
+        <p>
+            <input id="password" name="password" type="password" placeholder="password">
+        </p>
+        <p>
+            <input type="submit" value="Enter">
+            <input type="button" value="Cancel" onclick="backToMainPage()">
+        </p>
+        <a href="/register">want to register?</a>
+
+    </div>
+</form>
+
+
+</body>
+</html>

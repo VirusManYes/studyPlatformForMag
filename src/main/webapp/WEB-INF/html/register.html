@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <script src="/resources/js/script.js"></script>
+
+</head>
+<body style="margin: 0%;">
+
+<form th:method="POST" th:action="@{/register}" th:object="${user}">
+    <div class="enterStatus">
+        <h1>REGISTRATION</h1>
+    </div>
+
+    <div id="enterBar">
+        <p>
+            <input id="login" th:field="*{username}">
+        </p>
+        <p>
+            <input id="password" type="password" th:field="*{password}">
+        </p>
+        <p>
+            <input type="submit" value="Register">
+            <input type="button" value="Cancel" onclick="backToMainPage()">
+        </p>
+    </div>
+</form>
+
+
+</body>
+</html>

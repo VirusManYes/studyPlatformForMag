@@ -1,0 +1,112 @@
+body div{
+    border-style: solid;
+}
+html{
+   /* background: url("/resources/jpg/study.jpg");*/
+    min-height: 100%;
+    background-size: cover;
+}
+#header{
+    height: 15vh;  
+}
+
+#content{
+    height: 70vh;
+    width: 100%;
+    display: flex;
+}
+#category{
+    flex-grow: 1;
+
+}
+#goods{
+    flex-grow: 6;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+#goods-flex{
+    flex-grow: 6;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#goods-flex .good{
+    margin-top: 1%;
+    height: auto;
+    width: 20%;
+}
+
+#countGoods{
+    top: 0;
+    right: 0;
+    height: 5%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#footer{
+    height: 10vh; 
+}
+
+#autorization{
+    background-color: green; 
+    height: 9vh; 
+    width: 25%;
+    margin-left: 70%;
+}
+
+#enter{
+    background-color: gray; 
+    height: 5vh; 
+    width: 17vh;
+    margin-top: 3%;
+    margin-left: 10%;
+    display: inline-block;
+}    
+#enter:hover{
+    background-color: blueviolet; 
+}       
+
+#register{
+    background-color: gray; 
+    height: 5vh; 
+    width: 17vh;
+    display: inline-block;
+    margin-left: 10%;  
+}
+#register:hover{
+    background-color: blueviolet;  
+}
+#enterBar{
+    height: 15%;
+    width: 13%;
+    background-color: red;
+    padding-left: 2%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+#enterStatus{
+    background-color: blue;
+    padding-left: 2%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+
+
+
+

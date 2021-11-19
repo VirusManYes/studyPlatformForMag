@@ -6,21 +6,25 @@
 </head>
 <body>
 
-    <h1>All users in base</h1>
+    <h1>All reserves in base</h1>
 
     <table>
-        <tr th:each = "user:${allUsers}">
+        <tr th:each = "reserve:${allReserves}">
             <td>
-                <a th:href = "'user/' + ${user.getId()}" th:text = "${user.getUsername()}"></a>
+                <label th:text = "${reserve.getNumber()}"></label>
             </td>
             <td>
-                <label th:text = "${user.isActive}"></label>
+                <label th:text = "${reserve.getUser().getUsername()}"></label>
             </td>
             <td>
-                <form th:switch = "${user.getIsActive()}" th:action="@{/makeBan}" th:method="post">
-                    <button th:case = "${T(com.VKR.studyPlatform.models.Status).ACTIVE}" type="submit">Забанить</button>
-                    <button th:case = "${T(com.VKR.studyPlatform.models.Status).BANNED}" type="submit">Разбанить</button>
-                    <input name="userId" th:value="${user.getId()}">
+                <label th:text = "${reserve.getBook().getName()}"></label>
+            </td>
+            <td>
+                <form th:action="@{/realizeReserve(number=${reserve.getNumber(),book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                    <button type="submit">Выдать книгу</button>
+                </form>
+                <form th:action="@{/deleteReserve}" th:method="post">
+                    <button type="submit">Убрать резерв</button>
                 </form>
             </td>
         </tr>

@@ -11,15 +11,18 @@ import java.util.Date;
 public class Reserve {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number")
     private int number;
 
-    //@Column(name = "book")
-    @ManyToOne
+
+    @ManyToOne(targetEntity = Good.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "book")
     private Good book;
 
     //@Column(name = "user")
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "\"user\"")
     private User user;
 
     @Column(name = "deadline")

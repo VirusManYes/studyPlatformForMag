@@ -1,5 +1,8 @@
 package com.VKR.studyPlatform.models;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,7 +12,7 @@ public class Good {
 
     @Id
     @Column(name = "id")
-    @JoinColumn(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "name")
     private String name;
@@ -18,11 +21,12 @@ public class Good {
     @Column(name = "\"bigInfo\"")
     private String bigInfo;
 
-    @OneToMany(mappedBy = "good")
-    private List<Reserve> reserves;
+
 
     public Good() {
     }
+
+
 
     public int getId() {
         return id;

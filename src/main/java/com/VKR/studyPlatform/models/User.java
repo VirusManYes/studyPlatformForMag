@@ -16,10 +16,8 @@ public class User {
 
 
     @Id
-    //@Column(name = "id")
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "username")
@@ -32,9 +30,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", columnDefinition = "character varying(15) default ACTIVE")
     private Status status;
-
-    @OneToMany(mappedBy = "user")
-    private List<Reserve> reserves;
 
     public User() {
     }

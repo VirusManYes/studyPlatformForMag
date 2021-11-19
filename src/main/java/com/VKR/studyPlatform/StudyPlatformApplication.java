@@ -7,14 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StudyPlatformApplication {
 
 	public static void main(String[] args) {
-		try {
 			SpringApplication.run(StudyPlatformApplication.class, args);
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		} catch (Throwable e){
-			e.printStackTrace();
-		}
 	}
 
 }

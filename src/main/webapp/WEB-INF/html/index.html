@@ -28,6 +28,7 @@
         </div>
 
         <a style="color: red" href="/users">Show all users</a>
+        <a style="color: red" href="/allReserves">Show all reserves</a>
     </div>
     <div id="content">
         <div id="category">
@@ -46,11 +47,10 @@
             <div id="goods-flex">
                 <div th:each ="good:${allGoods}" class="good">
                     <p th:text = "${good.name}"></p>
-                    <p>В наличии:</p>
-                    <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook}" method="post" th:object="${good}>
-                        <input type="submit value="Забронировать">
+                    <!--<p th:text = "'В наличии:' + ${good.getBookcount()}"></p>-->
+                    <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook/{id}(id=${good.getId()})}" method="post">
+                        <input type="submit" value="Забронировать">
                     </form>
-
                 </div>
             </div>
         </div>

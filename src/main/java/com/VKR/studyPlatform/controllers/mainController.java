@@ -31,6 +31,7 @@ public class mainController {
     public String mainPage(Model model){
         List<Good> allGoods = goodsDao.getAll();
         model.addAttribute("allGoods", allGoods);
+        model.addAttribute("reserveGood", new Good());
         return "index";
     }
 

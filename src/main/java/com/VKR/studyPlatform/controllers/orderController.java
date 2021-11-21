@@ -1,6 +1,7 @@
 package com.VKR.studyPlatform.controllers;
 
 import com.VKR.studyPlatform.dao.GoodsDao;
+import com.VKR.studyPlatform.dao.OrderDao;
 import com.VKR.studyPlatform.dao.ReserveDao;
 import com.VKR.studyPlatform.dao.UsersDao;
 import com.VKR.studyPlatform.models.*;
@@ -27,6 +28,9 @@ public class orderController {
     @Autowired
     private GoodsDao goodsDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
     @PostMapping("/reserveBook/{id}")
     public String addUser(@PathVariable("id") int id, Model model, Principal principal){
         User currentUser = usersDao.getUserByUsername(principal.getName());
@@ -41,10 +45,52 @@ public class orderController {
     }
 
     @PostMapping("/realizeReserve")
-    public String addUser(@RequestParam(value = "number") int number,
+    public String realizeReserve(@RequestParam(value = "number") int number,
                           @RequestParam(value = "user") int user,
                           @RequestParam(value = "book") int book,
-                          Model model, Principal principal){
+                          Model model){
+
+        Reserve reserve = new Reserve();
+        reserve.setNumber(number);
+        reserve.setBook(goodsDao.getGood(book));
+        reserve.setUser(usersDao.getUser(user));
+        reserve.setDeadline(getDeadlineToBook());
+        reserve.setCount(-1);
+        reserveDao.saveReserve(reserve);
+
+        Order order = new Order();
+        order.setNumber(number);
+        order.setBook(goodsDao.getGood(book));
+        order.setUser(usersDao.getUser(user));
+        order.setDeadline(getDeadlineToBook());
+        order.setCount(1);
+        orderDao.saveOrder(order);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/realizeOrder")
+    public String realizeOrder(@RequestParam(value = "number") int number,
+                                 @RequestParam(value = "user") int user,
+                                 @RequestParam(value = "book") int book,
+                                 Model model){
+
+        Order order = new Order();
+        order.setNumber(number);
+        order.setBook(goodsDao.getGood(book));
+        order.setUser(usersDao.getUser(user));
+        order.setDeadline(getDeadlineToBook());
+        order.setCount(-1);
+        orderDao.saveOrder(order);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/deleteReserve")
+    public String deleteReserve(@RequestParam(value = "number") int number,
+                          @RequestParam(value = "user") int user,
+                          @RequestParam(value = "book") int book,
+                          Model model){
 
         Reserve reserve = new Reserve();
         reserve.setNumber(number);
@@ -55,6 +101,23 @@ public class orderController {
         reserveDao.saveReserve(reserve);
         return "redirect:/";
     }
+
+    @PostMapping("/deleteOrder")
+    public String deleteOrder(@RequestParam(value = "number") int number,
+                                @RequestParam(value = "user") int user,
+                                @RequestParam(value = "book") int book,
+                                Model model){
+
+        Order order = new Order();
+        order.setNumber(number);
+        order.setBook(goodsDao.getGood(book));
+        order.setUser(usersDao.getUser(user));
+        order.setDeadline(getDeadlineToBook());
+        order.setCount(-1);
+        orderDao.saveOrder(order);
+        return "redirect:/";
+    }
+
 
     public Date getDeadlineToBook(){
         Calendar deadlineToBook = Calendar.getInstance();
@@ -92,12 +155,28 @@ public class orderController {
         return "allReserves";
     }
 
+    @GetMapping("/allOrders")
+    public String allOrders(Model model){
+        List<Order> allReserves = orderDao.getAll("id"); //вставить сюда сортировку
+        model.addAttribute("allReserves", allReserves);
+        model.addAttribute("showCurrentReserves", true);
+        return "allOrders";
+    }
+
     @GetMapping("/getCurrentReserves")
     public String getCurrentReserves(Model model){
         List<Reserve> currentReserves = reserveDao.getCurrentReserves();
         model.addAttribute("allReserves", currentReserves);
         model.addAttribute("showCurrentReserves", false);
         return "allReserves";
+    }
+
+    @GetMapping("/getCurrentOrders")
+    public String getCurrentOrders(Model model){
+        List<Order> currentReserves = orderDao.getCurrentOrders();
+        model.addAttribute("allReserves", currentReserves);
+        model.addAttribute("showCurrentReserves", false);
+        return "allOrders";
     }
 
 }

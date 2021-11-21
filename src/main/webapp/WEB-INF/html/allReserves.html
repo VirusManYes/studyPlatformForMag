@@ -6,8 +6,8 @@
 </head>
 <body>
 
-    <h1>All reserves in base</h1>
-
+    <h1 th:if = "${showCurrentReserves}">All reserves in base</h1>
+    <h1 th:if = "${showCurrentReserves}==false">Current reserve in base</h1>
     <table>
         <tr th:each = "reserve:${allReserves}">
             <td>
@@ -20,11 +20,17 @@
                 <label th:text = "${reserve.getBook().getName()}"></label>
             </td>
             <td>
-                <form th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                <form th:if="${isReserve}" th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Выдать книгу</button>
                 </form>
-                <form th:action="@{/deleteReserve}" th:method="post">
+                <form th:if="${isReserve}" th:action="@{/deleteReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Убрать резерв</button>
+                </form>
+                <form th:unless="${isReserve}" th:action="@{/realizeOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                    <button type="submit">Принять книгу</button>
+                </form>
+                <form th:unless="${isReserve}" th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                    <button type="submit">Удалить заказ</button>
                 </form>
             </td>
         </tr>

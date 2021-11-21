@@ -21,12 +21,20 @@ public class Good {
     @Column(name = "\"bigInfo\"")
     private String bigInfo;
 
-
+    @Column
+    private int bookCount;
 
     public Good() {
     }
 
 
+    public int getBookCount() {
+        return bookCount;
+    }
+
+    public void setBookCount(int bookCount) {
+        this.bookCount = bookCount;
+    }
 
     public int getId() {
         return id;

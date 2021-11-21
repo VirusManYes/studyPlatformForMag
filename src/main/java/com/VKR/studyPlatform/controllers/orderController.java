@@ -4,6 +4,7 @@ import com.VKR.studyPlatform.dao.GoodsDao;
 import com.VKR.studyPlatform.dao.ReserveDao;
 import com.VKR.studyPlatform.dao.UsersDao;
 import com.VKR.studyPlatform.models.*;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class orderController {
         reserve.setBook(goodsDao.getGood(id));
         reserve.setUser(currentUser);
         reserve.setDeadline(getDeadlineToBook());
+        reserve.setCount(1);
         reserveDao.saveReserve(reserve);
         return "redirect:/";
     }
@@ -49,6 +51,7 @@ public class orderController {
         reserve.setBook(goodsDao.getGood(book));
         reserve.setUser(usersDao.getUser(user));
         reserve.setDeadline(getDeadlineToBook());
+        reserve.setCount(-1);
         reserveDao.saveReserve(reserve);
         return "redirect:/";
     }
@@ -85,6 +88,15 @@ public class orderController {
     public String allReserves(Model model){
         List<Reserve> allReserves = reserveDao.getAll("id"); //вставить сюда сортировку
         model.addAttribute("allReserves", allReserves);
+        model.addAttribute("showCurrentReserves", true);
+        return "allReserves";
+    }
+
+    @GetMapping("/getCurrentReserves")
+    public String getCurrentReserves(Model model){
+        List<Reserve> currentReserves = reserveDao.getCurrentReserves();
+        model.addAttribute("allReserves", currentReserves);
+        model.addAttribute("showCurrentReserves", false);
         return "allReserves";
     }
 

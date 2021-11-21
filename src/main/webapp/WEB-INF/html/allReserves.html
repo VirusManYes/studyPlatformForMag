@@ -20,7 +20,7 @@
                 <label th:text = "${reserve.getBook().getName()}"></label>
             </td>
             <td>
-                <form th:action="@{/realizeReserve(number=${reserve.getNumber(),book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                <form th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Выдать книгу</button>
                 </form>
                 <form th:action="@{/deleteReserve}" th:method="post">
@@ -30,16 +30,11 @@
         </tr>
     </table>
 
-    <form action="/registerAdmin" method="post">
-        <input id="username" name="username">
-        <button type="submit">Register new user</button>
+    <form action="/getCurrentReserves" th:if = "${showCurrentReserves}" method="get">
+        <button type="submit">Show current reserves</button>
     </form>
-
-    <form action="/addGoodAdmin" method="post">
-        <button type="submit">Register new good</button>
-    </form>
-    <form action="/addReserveAdmin" method="post">
-        <button type="submit">Register new reserve</button>
+    <form action="/allReserves" th:if = "${showCurrentReserves}==false" method="get">
+        <button type="submit">Show all reserves</button>
     </form>
 
     <br>

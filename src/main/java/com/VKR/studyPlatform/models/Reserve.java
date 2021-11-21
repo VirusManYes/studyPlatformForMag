@@ -12,8 +12,15 @@ public class Reserve {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number")
     private int number;
+
+    @Column(name = "count")
+    private int count;
 
 
     @ManyToOne(targetEntity = Good.class, fetch = FetchType.LAZY)
@@ -30,6 +37,23 @@ public class Reserve {
 
     public Reserve() {
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public int getNumber() {
         return number;
     }

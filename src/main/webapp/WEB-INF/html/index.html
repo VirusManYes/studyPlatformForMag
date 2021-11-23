@@ -15,6 +15,7 @@
     <div id="header">
         ШАПКА
         <p sec:authorize="isAuthenticated()" th:text = "${#authentication.name}"></p>
+
         <div id = "autorization">
              <div sec:authorize="isAuthenticated()==false" id="enter" onclick="enter()">
                 Enter
@@ -28,8 +29,8 @@
         </div>
 
         <a style="color: red" href="/users">Show all users</a>
-        <a style="color: red" href="/allReserves">Show all reserves</a>
-        <a style="color: red" href="/allOrders">Show all orders</a>
+        <a style="color: red" href="/getCurrentReserves">Show all reserves</a>
+        <a style="color: red" href="/getCurrentOrders">Show all orders</a>
     </div>
     <div id="content">
         <div id="category">
@@ -58,6 +59,12 @@
     </div>
     <div id="footer">
         footer
+            <a href="/goods/1">Первая</a>
+            <a th:if = "${prevPage}>=1" th:href="'/goods/' + ${prevPage}">Предыдущая</a>
+            <a th:if = "${nextPage}<=${page}" th:href="'/goods/' + ${nextPage}">Следующая</a>
+            <a th:href= "'/goods/' + ${page}">Последняя</a>
+            <h1 th:text = "'Страница' + ${currentPage}"></h1>
+
     </div>
 
     

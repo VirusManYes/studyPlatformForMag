@@ -1,5 +1,7 @@
 package com.VKR.studyPlatform.dao;
 
+import com.VKR.studyPlatform.models.ChangeStatus;
+import com.VKR.studyPlatform.models.Good;
 import com.VKR.studyPlatform.models.Order;
 import com.VKR.studyPlatform.models.Reserve;
 import org.springframework.stereotype.Repository;
@@ -51,6 +53,23 @@ public class OrderDao {
 
     public void saveOrder(Order reserve){
         entityManager.persist(reserve);
+    }
+
+    public void changeCount(ChangeStatus changeStatus, Good book){
+        Query preQuery = entityManager.createNativeQuery("select bc.bookcount from book_count bc where bc.book =?");
+        preQuery.setParameter(1, book.getId());
+        int bookCount = (int) preQuery.getSingleResult();
+
+        if(changeStatus == ChangeStatus.PLUS){
+            bookCount++;
+        } else if(changeStatus == ChangeStatus.MINUS){
+            bookCount--;
+        }
+        preQuery = entityManager.createNativeQuery("update book_count set bookcount = ? where book = ?");
+        preQuery.setParameter(1, bookCount);
+        preQuery.setParameter(2, book.getId());
+        preQuery.executeUpdate();
+
     }
 
     private String getQueryText(String textFor){

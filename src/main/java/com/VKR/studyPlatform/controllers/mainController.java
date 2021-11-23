@@ -29,9 +29,33 @@ public class mainController {
 
     @GetMapping("/")
     public String mainPage(Model model){
-        List<Good> allGoods = goodsDao.getAll();
+        List<Good> allGoods = goodsDao.getAll(0);
+
+        int page = goodsDao.getCount() / 3;
+
         model.addAttribute("allGoods", allGoods);
         model.addAttribute("reserveGood", new Good());
+        model.addAttribute("page", page);
+        model.addAttribute("prevPage", 0);
+        model.addAttribute("nextPage", 2);
+        model.addAttribute("currentPage", 1);
+        return "index";
+    }
+
+    @GetMapping("/goods/{page}")
+    public String goodsPaged(@PathVariable("page") int currentPage, Model model){
+        List<Good> allGoods = goodsDao.getAll((currentPage-1) * 3);
+
+        int prevPage = currentPage-1;
+        int nextPage = currentPage+1;
+        int page = goodsDao.getCount() / 3;
+
+        model.addAttribute("allGoods", allGoods);
+        model.addAttribute("reserveGood", new Good());
+        model.addAttribute("page", page);
+        model.addAttribute("prevPage", prevPage);
+        model.addAttribute("nextPage", nextPage);
+        model.addAttribute("currentPage", currentPage);
         return "index";
     }
 

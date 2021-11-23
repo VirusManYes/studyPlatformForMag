@@ -41,6 +41,7 @@ public class orderController {
         reserve.setDeadline(getDeadlineToBook());
         reserve.setCount(1);
         reserveDao.saveReserve(reserve);
+        orderDao.changeCount(ChangeStatus.MINUS, goodsDao.getGood(id));
         return "redirect:/";
     }
 
@@ -66,6 +67,7 @@ public class orderController {
         order.setCount(1);
         orderDao.saveOrder(order);
 
+
         return "redirect:/";
     }
 
@@ -82,6 +84,7 @@ public class orderController {
         order.setDeadline(getDeadlineToBook());
         order.setCount(-1);
         orderDao.saveOrder(order);
+        orderDao.changeCount(ChangeStatus.PLUS, goodsDao.getGood(book));
 
         return "redirect:/";
     }

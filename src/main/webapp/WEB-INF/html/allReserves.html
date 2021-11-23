@@ -8,7 +8,14 @@
 
     <h1 th:if = "${showCurrentReserves}">All reserves in base</h1>
     <h1 th:if = "${showCurrentReserves}==false">Current reserve in base</h1>
-    <table>
+    <table border="1">
+        <tr>
+            <th>Номер заказа</th>
+            <th>Пользователь</th>
+            <th>Книга</th>
+            <th>Действие</th>
+        </tr>
+
         <tr th:each = "reserve:${allReserves}">
             <td>
                 <label th:text = "${reserve.getNumber()}"></label>
@@ -20,17 +27,11 @@
                 <label th:text = "${reserve.getBook().getName()}"></label>
             </td>
             <td>
-                <form th:if="${isReserve}" th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                <form th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Выдать книгу</button>
                 </form>
-                <form th:if="${isReserve}" th:action="@{/deleteReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                <form th:action="@{/deleteReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Убрать резерв</button>
-                </form>
-                <form th:unless="${isReserve}" th:action="@{/realizeOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Принять книгу</button>
-                </form>
-                <form th:unless="${isReserve}" th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Удалить заказ</button>
                 </form>
             </td>
         </tr>

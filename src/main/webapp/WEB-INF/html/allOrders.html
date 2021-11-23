@@ -8,26 +8,37 @@
 
     <h1 th:if = "${showCurrentReserves}">All orders in base</h1>
     <h1 th:if = "${showCurrentReserves}==false">Current orders in base</h1>
-    <table>
-        <tr th:each = "reserve:${allReserves}">
-            <td>
-                <label th:text = "${reserve.getNumber()}"></label>
-            </td>
-            <td>
-                <label th:text = "${reserve.getUser().getUsername()}"></label>
-            </td>
-            <td>
-                <label th:text = "${reserve.getBook().getName()}"></label>
-            </td>
-            <td>
-                <form th:action="@{/realizeOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Принять книгу</button>
-                </form>
-                <form th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Удалить заказ</button>
-                </form>
-            </td>
-        </tr>
+    <table border="1">
+            <tr>
+                <th>Номер заказа</th>
+                <th>Пользователь</th>
+                <th>Книга</th>
+                <th>Действие</th>
+            </tr>
+
+
+            <tr th:each = "reserve:${allReserves}">
+
+                <td>
+                    <label th:text = "${reserve.getNumber()}"></label>
+                </td>
+                <td>
+                    <label th:text = "${reserve.getUser().getUsername()}"></label>
+                </td>
+                <td>
+                    <label th:text = "${reserve.getBook().getName()}"></label>
+                </td>
+                <td>
+                    <form th:action="@{/realizeOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                        <button type="submit">Принять книгу</button>
+                    </form>
+                    <form th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
+                        <button type="submit">Удалить заказ</button>
+                    </form>
+                </td>
+            </tr>
+
+
     </table>
 
     <form action="/getCurrentOrders" th:if = "${showCurrentReserves}" method="get">

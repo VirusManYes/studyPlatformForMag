@@ -4,11 +4,12 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "goods")
-public class Good {
+public class Good implements Serializable {
 
     @Id
     @Column(name = "id")

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -50,6 +51,29 @@ public class ReserveDao {
 
     public void saveReserve(Reserve reserve){
         entityManager.persist(reserve);
+    }
+
+    public void removeReserve(Reserve reserve){
+        //entityManager.remove(reserve);
+        entityManager.remove(entityManager.contains(reserve) ? reserve : entityManager.merge(reserve));
+    }
+
+    public List<Reserve> getOutOfDeadlineReserves(Date date){
+        Query query = entityManager.createNativeQuery("DROP TABLE IF EXISTS reserve_tempor; CREATE TEMPORARY TABLE reserve_tempor "
+                .concat("(numberBook integer); ")
+                .concat("INSERT into reserve_tempor ")
+                .concat("SELECT ")
+                .concat(" r.number ")
+                .concat("FROM reserve r ")
+                .concat("group by r.book,r.number ")
+                .concat("having sum(r.count)>0; "));
+        query.executeUpdate();
+        query = entityManager.createNativeQuery("SELECT * "
+                .concat("FROM reserve r ")
+                .concat("INNER JOIN reserve_tempor rt on r.number = rt.numberBook ")
+                .concat("WHERE r.deadline<? "), Reserve.class);
+        query.setParameter(1,date);
+        return query.getResultList();
     }
 
     private String getQueryText(String textFor){

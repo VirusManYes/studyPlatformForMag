@@ -23,12 +23,12 @@ public class Reserve {
     private int count;
 
 
-    @ManyToOne(targetEntity = Good.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Good.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "book")
     private Good book;
 
     //@Column(name = "user")
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "\"user\"")
     private User user;
 

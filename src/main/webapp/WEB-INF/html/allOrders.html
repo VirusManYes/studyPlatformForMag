@@ -10,6 +10,8 @@
     <h1 th:if = "${showCurrentReserves}==false">Current orders in base</h1>
     <table border="1">
             <tr>
+                <th></th>
+                <th>Дата</th>
                 <th>Номер заказа</th>
                 <th>Пользователь</th>
                 <th>Книга</th>
@@ -19,6 +21,13 @@
 
             <tr th:each = "reserve:${allReserves}">
 
+                <td th:switch = "${reserve.getCount()}">
+                    <label th:case = "1">+</label>
+                    <label th:case = "-1">-</label>
+                </td>
+                <td>
+                    <label th:text = "${reserve.getCurrentdate()}"></label>
+                </td>
                 <td>
                     <label th:text = "${reserve.getNumber()}"></label>
                 </td>

@@ -47,6 +47,24 @@ public class OrderDao {
         return preQuery.getResultList();
     }
 
+    public List getCurrentOrders(int userId){
+        Query preQuery = entityManager.createNativeQuery("DROP TABLE IF EXISTS Order_tempor; CREATE TEMPORARY TABLE Order_tempor "
+                .concat("(numberBook integer); ")
+                .concat("INSERT into order_tempor ")
+                .concat("SELECT ")
+                .concat(" o.number ")
+                .concat("FROM orders o ")
+                .concat("group by o.book,o.number ")
+                .concat("having sum(o.count)>0; "));
+        preQuery.executeUpdate();
+        preQuery = entityManager.createNativeQuery("SELECT * "
+                .concat("FROM orders o ")
+                .concat("INNER JOIN order_tempor ot on o.number = ot.numberBook ")
+                .concat("WHERE o.user=").concat(String.valueOf(userId))
+                .concat("ORDER BY o.deadline; "), Order.class);
+        return preQuery.getResultList();
+    }
+
     public Order getOrder(int id){
         return entityManager.find(Order.class, id);
     }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>All books</h1>
+
+    <form action="/changeBookCount" th:method="post">
+        <button type="submit">Изменить количество</button>
+    </form>
+
+
+        <button type="submit" th:if = "${changeCount}">Применить</button>
+
+
+            <table border="1">
+            <tr>
+                <th>Книга</th>
+                <th>Описание</th>
+                <th>Большое описание</th>
+                <th>Количество</th>
+                <th>Действие</th>
+            </tr>
+
+            <tr th:each = "book:${allBooks}">
+                <td>
+                    <label th:text = "${book.getName()}"></label>
+                </td>
+                <td>
+                    <label th:text = "${book.getDefinition()}"></label>
+                </td>
+                <td>
+                    <label th:text = "${book.getBigInfo()}"></label>
+                </td>
+                <td>
+                    <label th:unless = "${changeCount}" th:text = "${book.getBookCount}"></label>
+                    <input  name = "changeCount" th:if = "${changeCount}" th:text = "${book.getBookCount}"></input>
+
+
+                </td>
+                <td>
+                    <form th:action="@{/Book/{id}(id=${book.getId()})}" th:method="post">
+                        <button type="submit">Подробнее</button>
+                    </form>
+
+                    <form th:action="@{/deleteBook/{id}(id=${book.getId()})}" th:method="post">
+                        <button type="submit">Удалить книгу</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    <br>
+    <a href="/">Go to main page</a>
+</body>
+</html>

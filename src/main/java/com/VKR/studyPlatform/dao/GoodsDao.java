@@ -30,13 +30,21 @@ public class GoodsDao {
                 "OFFSET " + offset +
                 " FETCH NEXT 3 ROWS ONLY ", Good.class).getResultList();
         }
-        //List<Good> list2 = list.stream().map(a->(Good)(a)).collect(Collectors.toList());
-
-        //return entityManager.createNativeQuery("SELECT g.id,g.name,g.definition,g." + "\"bigInfo\"" + ",CASE WHEN (bk.bookcount is null) THEN 0 ELSE bk.bookcount END as bookcount FROM goods g LEFT JOIN book_count bk on g.id=bk.book", Good.class).getResultList();
-        //return entityManager.createQuery("from Good as Good left outer join book_count as book_count order by id", Good.class).getResultList();
 
     public int getCount(){
         return Integer.valueOf(entityManager.createNativeQuery("SELECT count(*) FROM goods").getSingleResult().toString());
+    }
+
+    public void deleteBook(Good book){
+        entityManager.remove(book);
+    }
+
+    public List<Good> getAll(){
+        return entityManager.createNativeQuery("SELECT g.id, name, definition,"+ "\"bigInfo\""+", coalesce(bk.bookcount,0) as bookCount " +
+                "FROM goods g " +
+                "LEFT JOIN book_count bk " +
+                "on g.id=bk.book " +
+                "ORDER BY coalesce(bk.bookcount,0) DESC ", Good.class).getResultList();
     }
 
     public List<Good> getAll(String sort){

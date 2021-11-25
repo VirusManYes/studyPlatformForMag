@@ -34,6 +34,8 @@ public class Reserve {
 
     @Column(name = "deadline")
     private Date deadline;
+    @Column(name = "currentdate")
+    private Date currentdate;
 
     public Reserve() {
     }
@@ -84,6 +86,14 @@ public class Reserve {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Date getCurrentdate() {
+        return currentdate;
+    }
+
+    public void setCurrentdate(Date currentdate) {
+        this.currentdate = currentdate;
     }
 
     @Override

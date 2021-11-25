@@ -32,6 +32,9 @@ public class Order {
     @Column(name = "deadline")
     private Date deadline;
 
+    @Column(name = "currentdate")
+    private Date currentdate;
+
     public Order() {
     }
 
@@ -81,6 +84,14 @@ public class Order {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Date getCurrentdate() {
+        return currentdate;
+    }
+
+    public void setCurrentdate(Date currentdate) {
+        this.currentdate = currentdate;
     }
 
     @Override

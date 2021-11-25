@@ -42,6 +42,7 @@ public class orderController {
         reserve.setUser(currentUser);
         reserve.setDeadline(getDeadlineToBook());
         reserve.setCount(1);
+        reserve.setCurrentdate(Calendar.getInstance().getTime());
         reserveDao.saveReserve(reserve);
         orderDao.changeCount(ChangeStatus.MINUS, goodsDao.getGood(id));
         return "redirect:/";
@@ -59,6 +60,7 @@ public class orderController {
         reserve.setUser(usersDao.getUser(user));
         reserve.setDeadline(getDeadlineToBook());
         reserve.setCount(-1);
+        reserve.setCurrentdate(Calendar.getInstance().getTime());
         reserveDao.saveReserve(reserve);
 
         Order order = new Order();
@@ -66,6 +68,7 @@ public class orderController {
         order.setBook(goodsDao.getGood(book));
         order.setUser(usersDao.getUser(user));
         order.setDeadline(getDeadlineToBook());
+        order.setCurrentdate(Calendar.getInstance().getTime());
         order.setCount(1);
         orderDao.saveOrder(order);
 
@@ -84,6 +87,7 @@ public class orderController {
         order.setBook(goodsDao.getGood(book));
         order.setUser(usersDao.getUser(user));
         order.setDeadline(getDeadlineToBook());
+        order.setCurrentdate(Calendar.getInstance().getTime());
         order.setCount(-1);
         orderDao.saveOrder(order);
         orderDao.changeCount(ChangeStatus.PLUS, goodsDao.getGood(book));
@@ -103,6 +107,7 @@ public class orderController {
         reserve.setUser(usersDao.getUser(user));
         reserve.setDeadline(getDeadlineToBook());
         reserve.setCount(-1);
+        reserve.setCurrentdate(Calendar.getInstance().getTime());
         reserveDao.saveReserve(reserve);
         return "redirect:/";
     }
@@ -118,6 +123,7 @@ public class orderController {
         order.setBook(goodsDao.getGood(book));
         order.setUser(usersDao.getUser(user));
         order.setDeadline(getDeadlineToBook());
+        order.setCurrentdate(Calendar.getInstance().getTime());
         order.setCount(-1);
         orderDao.saveOrder(order);
         return "redirect:/";
@@ -148,6 +154,7 @@ public class orderController {
         reserve.setUser(currentUser);
         reserve.setBook(goodsDao.getGood(1));
         reserve.setDeadline(getDeadlineToBook());
+        reserve.setCurrentdate(Calendar.getInstance().getTime());
         reserveDao.saveReserve(reserve);
         return "redirect:/";
     }
@@ -182,6 +189,24 @@ public class orderController {
         model.addAttribute("allReserves", currentReserves);
         model.addAttribute("showCurrentReserves", false);
         return "allOrders";
+    }
+
+    @GetMapping("/myReserves")
+    public String getMyReserves(Model model, Principal principal){
+        User currentUser = usersDao.getUserByUsername(principal.getName());
+
+        List<Reserve> currentReserves = reserveDao.getCurrentReserves(currentUser.getId());
+        model.addAttribute("allReserves", currentReserves);
+        return "myReserves";
+    }
+
+    @GetMapping("/myOrders")
+    public String getMyOrders(Model model, Principal principal){
+        User currentUser = usersDao.getUserByUsername(principal.getName());
+
+        List<Order> currentOrders = orderDao.getCurrentOrders(currentUser.getId());
+        model.addAttribute("allReserves", currentOrders);
+        return "myOrders";
     }
 
 }

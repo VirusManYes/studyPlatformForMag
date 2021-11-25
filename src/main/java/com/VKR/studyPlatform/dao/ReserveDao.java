@@ -1,5 +1,7 @@
 package com.VKR.studyPlatform.dao;
 
+import com.VKR.studyPlatform.models.ChangeStatus;
+import com.VKR.studyPlatform.models.Good;
 import com.VKR.studyPlatform.models.Reserve;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +45,41 @@ public class ReserveDao {
                 .concat("INNER JOIN reserve_tempor rt on r.number = rt.numberBook ")
                 .concat("ORDER BY r.deadline; "), Reserve.class);
         return preQuery.getResultList();
+    }
+
+    public List getCurrentReserves(int userId){
+        Query preQuery = entityManager.createNativeQuery("DROP TABLE IF EXISTS reserve_tempor; CREATE TEMPORARY TABLE reserve_tempor "
+                .concat("(numberBook integer); ")
+                .concat("INSERT into reserve_tempor ")
+                .concat("SELECT ")
+                .concat(" r.number ")
+                .concat("FROM reserve r ")
+                .concat("group by r.book,r.number ")
+                .concat("having sum(r.count)>0; "));
+        preQuery.executeUpdate();
+        preQuery = entityManager.createNativeQuery("SELECT * "
+                .concat("FROM reserve r ")
+                .concat("INNER JOIN reserve_tempor rt on r.number = rt.numberBook ")
+                .concat("WHERE r.user=").concat(String.valueOf(userId))
+                .concat(" ORDER BY r.deadline; "), Reserve.class);
+        return preQuery.getResultList();
+    }
+
+    public void changeCount(ChangeStatus changeStatus, Good book){
+        Query preQuery = entityManager.createNativeQuery("select bc.bookcount from book_count bc where bc.book =?");
+        preQuery.setParameter(1, book.getId());
+        int bookCount = (int) preQuery.getSingleResult();
+
+        if(changeStatus == ChangeStatus.PLUS){
+            bookCount++;
+        } else if(changeStatus == ChangeStatus.MINUS){
+            bookCount--;
+        }
+        preQuery = entityManager.createNativeQuery("update book_count set bookcount = ? where book = ?");
+        preQuery.setParameter(1, bookCount);
+        preQuery.setParameter(2, book.getId());
+        preQuery.executeUpdate();
+
     }
 
     public Reserve getReserve(int id){

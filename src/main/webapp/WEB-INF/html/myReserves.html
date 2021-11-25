@@ -6,23 +6,16 @@
 </head>
 <body>
 
-    <h1 th:if = "${showCurrentReserves}">All reserves in base</h1>
-    <h1 th:if = "${showCurrentReserves}==false">Current reserve in base</h1>
+    <h1>My reserves in base</h1>
     <table border="1">
         <tr>
-            <th></th>
             <th>Дата</th>
             <th>Номер заказа</th>
-            <th>Пользователь</th>
             <th>Книга</th>
             <th>Действие</th>
         </tr>
 
         <tr th:each = "reserve:${allReserves}">
-            <td th:switch = "${reserve.getCount()}">
-                <label th:case = "1">+</label>
-                <label th:case = "-1">-</label>
-            </td>
             <td>
                 <label th:text = "${reserve.getCurrentdate()}"></label>
             </td>
@@ -30,29 +23,15 @@
                 <label th:text = "${reserve.getNumber()}"></label>
             </td>
             <td>
-                <label th:text = "${reserve.getUser().getUsername()}"></label>
-            </td>
-            <td>
                 <label th:text = "${reserve.getBook().getName()}"></label>
             </td>
             <td>
-                <form th:action="@{/realizeReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Выдать книгу</button>
-                </form>
                 <form th:action="@{/deleteReserve(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
                     <button type="submit">Убрать резерв</button>
                 </form>
             </td>
         </tr>
     </table>
-
-    <form action="/getCurrentReserves" th:if = "${showCurrentReserves}" method="get">
-        <button type="submit">Show current reserves</button>
-    </form>
-    <form action="/allReserves" th:if = "${showCurrentReserves}==false" method="get">
-        <button type="submit">Show all reserves</button>
-    </form>
-
     <br>
     <a href="/">Go to main page</a>
 </body>

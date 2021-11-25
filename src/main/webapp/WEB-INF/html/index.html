@@ -31,6 +31,9 @@
         <a style="color: red" href="/users">Show all users</a>
         <a style="color: red" href="/getCurrentReserves">Show all reserves</a>
         <a style="color: red" href="/getCurrentOrders">Show all orders</a>
+        <a style="color: red" href="/myReserves">My reserves</a>
+        <a style="color: red" href="/myOrders">My orders</a>
+        <a style="color: red" href="/allBooks">All books</a>
     </div>
     <div id="content">
         <div id="category">
@@ -52,6 +55,9 @@
                     <p th:text = "'В наличии:' + ${good.getBookCount()}"></p>
                     <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook/{id}(id=${good.getId()})}" method="post">
                         <input type="submit" value="Забронировать">
+                    </form>
+                    <form sec:authorize="hasAnyAuthority('admin:read')" th:action="@{/deleteBookAndGoMain/{id}(id=${good.getId()})}" method="post">
+                        <input type="submit" value="Удалить книгу из базы">
                     </form>
                 </div>
             </div>

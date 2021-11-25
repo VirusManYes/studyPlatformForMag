@@ -1,6 +1,7 @@
 package com.VKR.studyPlatform.controllers;
 
 import com.VKR.studyPlatform.dao.ReserveDao;
+import com.VKR.studyPlatform.models.ChangeStatus;
 import com.VKR.studyPlatform.models.Reserve;
 import com.VKR.studyPlatform.models.Good;
 import com.VKR.studyPlatform.models.User;
@@ -24,7 +25,9 @@ public class scheduleController {
     public void deleteReserve(){
         List<Reserve> outReserves = reserveDao.getOutOfDeadlineReserves(Calendar.getInstance().getTime());
         for (Reserve r:outReserves) {
+            Good book = r.getBook();
             reserveDao.removeReserve(r);
+            reserveDao.changeCount(ChangeStatus.PLUS,book);// проверить
         }
     }
 

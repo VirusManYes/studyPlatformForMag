@@ -63,10 +63,5 @@ public class authController {
         return "login";
     }
 
-    /*@PostMapping("/login")
-    public String enter(Model model){
-        return "index";
-    }*/
-
 
 }

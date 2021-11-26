@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/resources/js/script.js"></script>
 </head>
 <body>
 
     <h1>All books</h1>
 
-    <form action="/changeBookCount" th:method="post">
-        <button type="submit">Изменить количество</button>
-    </form>
-
-
         <button type="submit" th:if = "${changeCount}">Применить</button>
-
 
             <table border="1">
             <tr>
@@ -36,9 +31,15 @@
                     <label th:text = "${book.getBigInfo()}"></label>
                 </td>
                 <td>
-                    <label th:unless = "${changeCount}" th:text = "${book.getBookCount}"></label>
-                    <input  name = "changeCount" th:if = "${changeCount}" th:text = "${book.getBookCount}"></input>
+                    <!--<label th:unless = "${changeCount}" th:text = "${book.getBookCount}"></label>-->
+                   <form action="/changeBookCount" th:method="post">
+                        <input type="number" name = "bookCount" th:id="'book'+${book.getId()}" th:value = "${book.getBookCount()}">
+                        <input type="number" name = "bookId" th:value = "${book.getId()}" hidden="true">
+                        <button th:onclick="|plusCount('${book.getId()}')|" type="button">+</button>
+                        <button th:onclick="|minusCount('${book.getId()}')|" type="button">-</button>
 
+                        <button id="changeCountConfirm"  type="submit" hidden="true">Изменить количество</button>
+                    </form>
 
                 </td>
                 <td>

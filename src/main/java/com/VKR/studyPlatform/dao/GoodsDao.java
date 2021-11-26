@@ -52,6 +52,14 @@ public class GoodsDao {
         return entityManager.createQuery("from Good".concat(sort), Good.class).getResultList();
     }
 
+    //сделать апдейт или инсерт
+    public void changeBookCount(String bookId, String newCount){
+         Query query = entityManager.createNativeQuery("UPDATE book_count set bookcount = ? where book = ?");
+         query.setParameter(1, Integer.parseInt(newCount));
+         query.setParameter(2, Integer.parseInt(bookId));
+         query.executeUpdate();
+    }
+
     public Good getGood(int id){
         return entityManager.find(Good.class, id);
     }

@@ -49,17 +49,21 @@ public class bookController {
         List<Good> allBooks = goodsDao.getAll();
 
         model.addAttribute("allBooks", allBooks);
-        model.addAttribute("changeCount", false);
         return "allBooks";
     }
 
-    @GetMapping("/changeBookCount")
-    public String changeBookCount(Model model){
+    //@RequestMapping(value = "/changeBookCount/{bookId}/{bookCount}", method = RequestMethod.GET)
+    @PostMapping("/changeBookCount")
+    public String changeBookCount(
+            Model model,@RequestParam(required = false) String bookCount, @RequestParam(required = false) String bookId){
+
+        //проверить, есть ли и сделать инсерт
+        goodsDao.changeBookCount(bookId, bookCount);
+
         List<Good> allBooks = goodsDao.getAll();
 
         model.addAttribute("allBooks", allBooks);
-        model.addAttribute("changeCount", true);
-        return "allBooks";
+        return "redirect:/allBooks";
     }
 
 

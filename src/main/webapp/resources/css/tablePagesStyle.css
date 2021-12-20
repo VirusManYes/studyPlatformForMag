@@ -1,0 +1,31 @@
+body{
+
+}
+table{
+    border-collapse: collapse;
+}
+td{
+    padding: 5px 10px;
+    border: 1px solid #132b09;
+}
+.reservesBody{
+    text-align: center;
+}
+.reservesTable{
+    width: 60%;
+    margin: auto;
+}
+.reservesTable td{
+    text-align: center;
+}
+.reservesTable td .button{
+    width: 90%;
+}
+.bookInfo{
+    width: 300px;
+}
+.bookControl .button{
+    width: 90%;
+    text-align: center;
+    width: 200px;
+}

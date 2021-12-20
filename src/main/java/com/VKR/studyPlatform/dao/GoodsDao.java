@@ -20,19 +20,19 @@ public class GoodsDao {
     private EntityManager entityManager;
 
 
-    public List<Good> getAll(int offset){
+    public List<Good> getAll(Double offset){
 
-        return entityManager.createNativeQuery("SELECT g.id, name, definition,"+ "\"bigInfo\""+", coalesce(bk.bookcount,0) as bookCount " +
+        return entityManager.createNativeQuery("SELECT g.id, name, author, definition,"+ "\"bigInfo\""+", coalesce(bk.bookcount,0) as bookCount " +
                 "FROM goods g " +
                 "LEFT JOIN book_count bk " +
                 "on g.id=bk.book " +
                 "ORDER BY coalesce(bk.bookcount,0) DESC " +
                 "OFFSET " + offset +
-                " FETCH NEXT 3 ROWS ONLY ", Good.class).getResultList();
+                " FETCH NEXT 8 ROWS ONLY ", Good.class).getResultList();
         }
 
-    public int getCount(){
-        return Integer.valueOf(entityManager.createNativeQuery("SELECT count(*) FROM goods").getSingleResult().toString());
+    public Double getCount(){
+        return Double.valueOf(entityManager.createNativeQuery("SELECT count(*) FROM goods").getSingleResult().toString());
     }
 
     public void deleteBook(Good book){
@@ -40,7 +40,7 @@ public class GoodsDao {
     }
 
     public List<Good> getAll(){
-        return entityManager.createNativeQuery("SELECT g.id, name, definition,"+ "\"bigInfo\""+", coalesce(bk.bookcount,0) as bookCount " +
+        return entityManager.createNativeQuery("SELECT g.id, name, author, definition,"+ "\"bigInfo\""+", coalesce(bk.bookcount,0) as bookCount " +
                 "FROM goods g " +
                 "LEFT JOIN book_count bk " +
                 "on g.id=bk.book " +

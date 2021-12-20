@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/resources/css/tablePagesStyle.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
 </head>
 <body>
 
     <h1>My orders in base</h1>
-    <table border="1">
+    <div class="toMainPage"><a href="/">На главную</a></div>
+    <table>
         <tr>
             <th>Дата</th>
             <th>Номер заказа</th>
@@ -27,12 +30,10 @@
             </td>
             <td>
                 <form th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                    <button type="submit">Убрать резерв</button>
+                    <button class="button" type="submit">Убрать резерв</button>
                 </form>
             </td>
         </tr>
     </table>
-    <br>
-    <a href="/">Go to main page</a>
 </body>
 </html>

@@ -7,72 +7,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
     <script src="/resources/js/script.js"></script>
 
 </head>
-<body style="margin: 0%;">
+<body>
+<div class="pageContent">
+    <div class="headerContent">
+        <div id="header">
+            <div class="siteName"> Студенческая библиотека</div>
+            <p sec:authorize="isAuthenticated()" th:text="${#authentication.name}"></p>
 
-    <div id="header">
-        ШАПКА
-        <p sec:authorize="isAuthenticated()" th:text = "${#authentication.name}"></p>
-
-        <div id = "autorization">
-             <div sec:authorize="isAuthenticated()==false" id="enter" onclick="enter()">
-                Enter
-            </div>
-            <div sec:authorize="isAuthenticated()==false" id="register" onclick="register()">
-                Registration
-            </div>
-            <form sec:authorize="isAuthenticated()" th:action="@{/logOut}" method="post">
-                <input type="submit" value="Sing Out">
-            </form>
-        </div>
-
-        <a style="color: red" href="/users">Show all users</a>
-        <a style="color: red" href="/getCurrentReserves">Show all reserves</a>
-        <a style="color: red" href="/getCurrentOrders">Show all orders</a>
-        <a style="color: red" href="/myReserves">My reserves</a>
-        <a style="color: red" href="/myOrders">My orders</a>
-        <a style="color: red" href="/allBooks">All books</a>
-    </div>
-    <div id="content">
-        <div id="category">
-            category
-        </div>
-        <div id="goods">
-            goods
-            <div id="countGoods">
-                <select id="goodsCount" name="goodsCount" onchange="refreshWithSelect()">
-                    Показать
-                    <option value="five">five</option>
-                    <option value="ten">ten</option>
-                    <option value="twelve">twelve</option>
-                </select>
-            </div>
-            <div id="goods-flex">
-                <div th:each ="good:${allGoods}" class="good">
-                    <p th:text = "${good.getName()}"></p>
-                    <p th:text = "'В наличии:' + ${good.getBookCount()}"></p>
-                    <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook/{id}(id=${good.getId()})}" method="post">
-                        <input type="submit" value="Забронировать">
-                    </form>
-                    <form sec:authorize="hasAnyAuthority('admin:read')" th:action="@{/deleteBookAndGoMain/{id}(id=${good.getId()})}" method="post">
-                        <input type="submit" value="Удалить книгу из базы">
-                    </form>
+            <div id="authorization">
+                <div sec:authorize="isAuthenticated()==false" id="enter" class="button" onclick="enter()">
+                    Enter
                 </div>
+                <div sec:authorize="isAuthenticated()==false" id="register" class="button" onclick="register()">
+                    Registration
+                </div>
+                <form sec:authorize="isAuthenticated()" th:action="@{/logOut}" method="post">
+                    <input class="button" type="submit" value="Sing Out">
+                </form>
+            </div>
+        </div>
+        <div class="menu">
+            <div sec:authorize="hasAnyAuthority('admin:read')"><a href="/users">Show all users</a></div>
+            <div sec:authorize="hasAnyAuthority('admin:read')"><a href="/getCurrentReserves">Show all
+                reserves</a></div>
+            <div sec:authorize="hasAnyAuthority('admin:read')"><a href="/getCurrentOrders">Show all orders</a></div>
+            <div sec:authorize="hasAnyAuthority('user:read')"><a href="/myReserves">My reserves</a></div>
+            <div sec:authorize="hasAnyAuthority('user:read')"><a href="/myOrders">My orders</a></div>
+            <div sec:authorize="hasAnyAuthority('admin:read')"><a href="/allBooks">All books</a></div>
+        </div>
+    </div>
+
+    <div id="mainContent">
+        <div th:each="book:${allGoods}" class="bookCard">
+            <div>
+                <div class="bookName"> <a th:text="${book.getName()}" th:href="'/good/' + ${book.getId()}"></a></div>
+                <div> <p th:text="${book.getAuthor()}"></p></div>
+                <p class="bookDescription" th:text="${book.getUIDefinition()}"></p>
+                <p th:text="'В наличии:' + ${book.getBookCount()}"></p>
+            </div>
+            <div>
+                <form sec:authorize="isAuthenticated()" th:action="@{/reserveBook/{id}(id=${book.getId()})}"
+                      method="post">
+                    <input type="submit" class="button" value="Забронировать">
+                </form>
+                <form sec:authorize="hasAnyAuthority('admin:read')"
+                      th:action="@{/deleteBookAndGoMain/{id}(id=${book.getId()})}" method="post">
+                    <input class="button" type="submit" value="Удалить книгу из базы">
+                </form>
             </div>
         </div>
     </div>
     <div id="footer">
-        footer
-            <a href="/goods/1">Первая</a>
-            <a th:if = "${prevPage}>=1" th:href="'/goods/' + ${prevPage}">Предыдущая</a>
-            <a th:if = "${nextPage}<=${page}" th:href="'/goods/' + ${nextPage}">Следующая</a>
-            <a th:href= "'/goods/' + ${page}">Последняя</a>
-            <h1 th:text = "'Страница' + ${currentPage}"></h1>
+        <a href="/goods/1">Первая</a>
+        <a th:if="${prevPage}>=1" th:href="'/goods/' + ${prevPage}">Предыдущая</a>
+        <a th:if="${nextPage}<=${page}" th:href="'/goods/' + ${nextPage}">Следующая</a>
+        <a th:href="'/goods/' + ${page}">Последняя</a>
+        <p th:text="'Страница ' + ${currentPage}"></p>
 
     </div>
+</div>
 
-    
+
 </body>
 </html>

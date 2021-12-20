@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+body{
+    font-family: 'Old Standard TT', serif;
+    font-size: 20px;
+}
+.bookContent{
+    width: 80%;
+    margin: auto;
+}
+.row{
+    margin-top: 20px;
+}
+.rowLabel{
+    color: rgba(25, 32, 31, 0.63);
+}
+.rowValue{
+    color: #132b09;
+}

@@ -4,30 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="/resources/js/script.js"></script>
+    <link rel="stylesheet" href="/resources/css/tablePagesStyle.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
 </head>
 <body>
 
     <h1>All books</h1>
-
+    <div class="toMainPage"><a href="/">На главную</a></div>
         <button type="submit" th:if = "${changeCount}">Применить</button>
 
-            <table border="1">
+            <table>
             <tr>
-                <th>Книга</th>
-                <th>Описание</th>
-                <th>Большое описание</th>
-                <th>Количество</th>
-                <th>Действие</th>
+                <th><a href="/">Книга</a></th>
+                <th><a href="/">Описание</a></th>
+                <th><a href="/">Большое описание</a></th>
+                <th><a href="/">Количество</a></th>
+                <th><a href="/">Действие</a></th>
             </tr>
 
             <tr th:each = "book:${allBooks}">
-                <td>
+                <td class="bookInfo">
                     <label th:text = "${book.getName()}"></label>
                 </td>
-                <td>
+                <td class="bookInfo">
                     <label th:text = "${book.getDefinition()}"></label>
                 </td>
-                <td>
+                <td class="bookInfo">
                     <label th:text = "${book.getBigInfo()}"></label>
                 </td>
                 <td>
@@ -35,25 +37,23 @@
                    <form action="/changeBookCount" th:method="post">
                         <input type="number" name = "bookCount" th:id="'book'+${book.getId()}" th:value = "${book.getBookCount()}">
                         <input type="number" name = "bookId" th:value = "${book.getId()}" hidden="true">
-                        <button th:onclick="|plusCount('${book.getId()}')|" type="button">+</button>
-                        <button th:onclick="|minusCount('${book.getId()}')|" type="button">-</button>
+                        <button class="button" th:onclick="|plusCount('${book.getId()}')|" type="button">+</button>
+                        <button class="button" th:onclick="|minusCount('${book.getId()}')|" type="button">-</button>
 
-                        <button id="changeCountConfirm"  type="submit" hidden="true">Изменить количество</button>
+                        <button class="button" id="changeCountConfirm"  type="submit">Изменить количество</button>
                     </form>
 
                 </td>
-                <td>
+                <td class="bookControl">
                     <form th:action="@{/Book/{id}(id=${book.getId()})}" th:method="post">
-                        <button type="submit">Подробнее</button>
+                        <button class="button" type="submit">Подробнее</button>
                     </form>
 
                     <form th:action="@{/deleteBook/{id}(id=${book.getId()})}" th:method="post">
-                        <button type="submit">Удалить книгу</button>
+                        <button class="button" type="submit">Удалить книгу</button>
                     </form>
                 </td>
             </tr>
         </table>
-    <br>
-    <a href="/">Go to main page</a>
 </body>
 </html>

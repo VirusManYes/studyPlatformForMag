@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+
+body{
+    font-family: 'Old Standard TT', serif;
+}
+
+.button{
+    margin: 5px;
+    cursor: pointer;
+    background-color: #c9ffb5;
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: #132b09;
+    text-align: center;
+    border: 1px solid #4aa723;
+}
+.button:hover{
+    background-color: #96ec9e;
+    box-shadow: 0 0 1px 1px #9ffaa8;
+}
+.toMainPage{
+    margin: 10px 10px 10px 0;
+}

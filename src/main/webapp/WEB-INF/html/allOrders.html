@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/resources/css/tablePagesStyle.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
 </head>
 <body>
-
+<div class="toMainPage"><a href="/">На главную</a></div>
     <h1 th:if = "${showCurrentReserves}">All orders in base</h1>
     <h1 th:if = "${showCurrentReserves}==false">Current orders in base</h1>
-    <table border="1">
+    <table>
             <tr>
                 <th></th>
-                <th>Дата</th>
-                <th>Номер заказа</th>
-                <th>Пользователь</th>
-                <th>Книга</th>
-                <th>Действие</th>
+                <th><a href="/">Дата</a></th>
+                <th><a href="/">Номер заказа</a></th>
+                <th><a href="/">Пользователь</a></th>
+                <th><a href="/">Книга</a></th>
+                <th><a href="/">Действие</a></th>
             </tr>
 
 
@@ -39,10 +41,10 @@
                 </td>
                 <td>
                     <form th:action="@{/realizeOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                        <button type="submit">Принять книгу</button>
+                        <button class="button" type="submit">Принять книгу</button>
                     </form>
                     <form th:action="@{/deleteOrder(number=${reserve.getNumber()},book=${reserve.getBook().getId()},user=${reserve.getUser().getId()})}" th:method="post">
-                        <button type="submit">Удалить заказ</button>
+                        <button class="button" type="submit">Удалить заказ</button>
                     </form>
                 </td>
             </tr>
@@ -51,13 +53,10 @@
     </table>
 
     <form action="/getCurrentOrders" th:if = "${showCurrentReserves}" method="get">
-        <button type="submit">Show current orders</button>
+        <button class="button" type="submit">Show current orders</button>
     </form>
     <form action="/allOrders" th:unless = "${showCurrentReserves}" method="get">
-        <button type="submit">Show all orders</button>
+        <button class="button" type="submit">Show all orders</button>
     </form>
-
-    <br>
-    <a href="/">Go to main page</a>
 </body>
 </html>

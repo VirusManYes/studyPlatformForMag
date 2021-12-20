@@ -29,9 +29,9 @@ public class mainController {
 
     @GetMapping("/")
     public String mainPage(Model model){
-        List<Good> allGoods = goodsDao.getAll(0);
+        List<Good> allGoods = goodsDao.getAll((double) 0);
 
-        int page = goodsDao.getCount() / 3;
+        Double page = Math.ceil(goodsDao.getCount() / 8);
 
         model.addAttribute("allGoods", allGoods);
         model.addAttribute("reserveGood", new Good());
@@ -43,19 +43,19 @@ public class mainController {
     }
 
     @GetMapping("/goods/{page}")
-    public String goodsPaged(@PathVariable("page") int currentPage, Model model){
-        List<Good> allGoods = goodsDao.getAll((currentPage-1) * 3);
+    public String goodsPaged(@PathVariable("page") Double currentPage, Model model){
+        List<Good> allGoods = goodsDao.getAll((currentPage-1) * 8);
 
-        int prevPage = currentPage-1;
-        int nextPage = currentPage+1;
-        int page = goodsDao.getCount() / 3;
+        Double prevPage = currentPage-1;
+        Double nextPage = currentPage+1;
+        Double page = goodsDao.getCount() / 8;
 
         model.addAttribute("allGoods", allGoods);
         model.addAttribute("reserveGood", new Good());
         model.addAttribute("page", page);
         model.addAttribute("prevPage", prevPage);
         model.addAttribute("nextPage", nextPage);
-        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("currentPage", Math.ceil(currentPage));
         return "index";
     }
 
@@ -66,6 +66,15 @@ public class mainController {
         model.addAttribute("userId", "User ID = " + user.getUsername());
         model.addAttribute("user", user);
         return "user";
+    }
+
+    @GetMapping("/good/{id}")
+    public String goodById(@PathVariable("id") int id, Model model){
+        Good good = goodsDao.getGood(id);
+
+        //model.addAttribute("userId", "User ID = " + user.getUsername());
+        model.addAttribute("good", good);
+        return "good";
     }
 
     @GetMapping("/users")

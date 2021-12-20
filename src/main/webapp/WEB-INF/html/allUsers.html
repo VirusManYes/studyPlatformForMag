@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/resources/css/tablePagesStyle.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
 </head>
 <body>
 
     <h1>All users in base</h1>
-
+    <div class="toMainPage"><a href="/">На главную</a></div>
     <table>
         <tr th:each = "user:${allUsers}">
             <td>
@@ -18,9 +20,8 @@
             </td>
             <td>
                 <form th:switch = "${user.getIsActive()}" th:action="@{/makeBan}" th:method="post">
-                    <button th:case = "${T(com.VKR.studyPlatform.models.Status).ACTIVE}" type="submit">Забанить</button>
-                    <button th:case = "${T(com.VKR.studyPlatform.models.Status).BANNED}" type="submit">Разбанить</button>
-                    <input name="userId" th:value="${user.getId()}">
+                    <button  class="button"  th:case = "${T(com.VKR.studyPlatform.models.Status).ACTIVE}" type="submit">Забанить</button>
+                    <button  class="button"  th:case = "${T(com.VKR.studyPlatform.models.Status).BANNED}" type="submit">Разбанить</button>
                 </form>
             </td>
         </tr>
@@ -28,17 +29,16 @@
 
     <form action="/registerAdmin" method="post">
         <input id="username" name="username">
-        <button type="submit">Register new user</button>
+        <button  class="button"  type="submit">Register new user</button>
     </form>
 
     <form action="/addGoodAdmin" method="post">
-        <button type="submit">Register new good</button>
+        <button  class="button"  type="submit">Register new good</button>
     </form>
     <form action="/addReserveAdmin" method="post">
-        <button type="submit">Register new reserve</button>
+        <button  class="button"  type="submit">Register new reserve</button>
     </form>
 
     <br>
-    <a href="/">Go to main page</a>
 </body>
 </html>

@@ -17,6 +17,8 @@ public class Good implements Serializable {
     private int id;
     @Column(name = "name")
     private String name;
+    @Column(name = "author")
+    private String author;
     @Column(name = "definition")
     private String definition;
     @Column(name = "\"bigInfo\"")
@@ -56,6 +58,13 @@ public class Good implements Serializable {
     public String getDefinition() {
         return definition;
     }
+    public String getUIDefinition() {
+        String result = this.definition;
+        if(result.length() > 200){
+            result = this.definition.substring(0, 200);
+        }
+        return result;
+    }
 
     public void setDefinition(String definition) {
         this.definition = definition;
@@ -74,5 +83,13 @@ public class Good implements Serializable {
     @Override
     public String toString() {
         return "Good:".concat(this.getName());
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

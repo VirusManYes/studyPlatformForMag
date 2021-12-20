@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="/resources/css/constantsStyle.css">
     <script src="../../static/js/script.js"></script>
 
 </head>
@@ -22,7 +23,7 @@
             </p>
             <p>
                 <input type="submit" value="Enter" >
-                <input type="button" value="Cancel" onclick="backToMainPage()">
+                <input  class="button"  type="button" value="Cancel" onclick="backToMainPage()">
             </p>
         </div>
     </form>

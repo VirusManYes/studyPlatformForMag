@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/css/goodPageStyle.css">
+</head>
+<body>
+<div class="toMainPage"><a href="/">На главную</a></div>
+<div class="bookContent">
+    <div class="row">
+        <span class="rowLabel">Автор:</span>
+        <span class="rowValue" th:text="${good.getAuthor()}"></span>
+    </div>
+    <div class="row">
+        <span class="rowLabel">Название:</span>
+        <span class="rowValue" th:text="${good.getName()}"></span>
+    </div>
+
+    <div class="row">
+        <div class="rowLabel">Аннотация:</div>
+        <div class="rowValue" th:text="${good.getDefinition()}"></div>
+    </div>
+
+    <div class="row">
+        <div class="rowLabel">Полное описание:</div>
+        <div class="rowValue" th:text="${good.getBigInfo()}"></div>
+    </div>
+</div>
+</body>
+</html>

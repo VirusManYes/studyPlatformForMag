@@ -1,0 +1,33 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("/resources/jpg/study.jpg");
+    height: 84vh;
+}
+#enterContainer{
+    border: 1px solid #132b09;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #ccfacf;
+    text-align: center;
+}
+#enterContainer>*{
+    margin: 10px;
+}
+.enterContainerForm{
+    width: 30%
+}
+#login, #password{
+    width: 80%;
+    margin: 10px;
+    height: 25px;
+    border-radius: 5px;
+}
+.formData{
+    text-align: center;
+}
+.errorText{
+    color: #ff4054;
+    font-weight: bold;
+}
